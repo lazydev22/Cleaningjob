@@ -1,0 +1,236 @@
+@font-face {
+  font-family: rdr;
+  src: url('../assets/fonts/rdrlino-regular-webfont.woff2') format('woff2'),
+       url('../assets/fonts/rdrlino-regular-webfont.woff') format('woff');
+}
+
+/* Same palette as dsml_crafting / dsml_progressbar, so the popup and the HUD (and the rest
+   of the dsml_ resources) all read as one system. */
+:root {
+  --bg-panel: #201810;
+  --ink-overlay: rgba(15, 10, 6, 0.72);
+  --text: #f0e6d2;
+  --text-muted: #b3a288;
+  --accent: #8c3a34;
+  --accent-bright: #c96a4f;
+  --gold: #c9a24b;
+  --border: rgba(201, 162, 75, 0.28);
+  --card-bg: rgba(255, 255, 255, 0.045);
+  --card-bg-hover: rgba(255, 255, 255, 0.09);
+  --success: #7fae6a;
+  --danger: #d9695f;
+  --radius-lg: 0.7rem;
+  --radius-md: 0.45rem;
+  --radius-sm: 0.3rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+#root {
+  font-family: rdr, 'Georgia', serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Popup */
+.cj-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8, 5, 3, 0.55);
+  z-index: 10;
+}
+
+@keyframes cj-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.cj-modal {
+  width: 21rem;
+  max-width: 92vw;
+  padding: 1.4rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: linear-gradient(var(--ink-overlay), var(--ink-overlay)), url('../assets/inkroller.png') center / cover no-repeat,
+    var(--bg-panel);
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.55);
+  text-align: center;
+  animation: cj-in 0.18s ease-out;
+}
+
+.cj-title {
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.6);
+}
+
+.cj-lede {
+  margin: 0 0 0.9rem;
+  font-size: 0.85em;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.cj-message {
+  margin: 0 0 0.9rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.8em;
+  border: 1px solid var(--border);
+}
+
+.cj-message.is-success {
+  color: var(--success);
+  border-color: rgba(127, 174, 106, 0.4);
+}
+
+.cj-message.is-error {
+  color: var(--danger);
+  border-color: rgba(217, 105, 95, 0.4);
+}
+
+.cj-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cj-btn {
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: 0.9em;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: filter 0.15s, background-color 0.15s;
+}
+
+.cj-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cj-btn-primary {
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+  color: #fff6ea;
+}
+
+.cj-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.cj-btn-ghost {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.cj-btn-ghost:hover:not(:disabled) {
+  background: var(--card-bg-hover);
+  color: var(--text);
+}
+
+/* Persistent HUD */
+.cj-hud {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  width: 15rem;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: linear-gradient(var(--ink-overlay), var(--ink-overlay)), url('../assets/inkroller.png') center / cover no-repeat,
+    var(--bg-panel);
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  animation: cj-in 0.18s ease-out;
+}
+
+.cj-hud-title {
+  font-size: 0.95em;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+}
+
+.cj-hud-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cj-hud-label {
+  font-size: 0.72em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.cj-hud-count {
+  font-size: 1.05em;
+  font-weight: 600;
+}
+
+.cj-hud-count-done {
+  color: var(--accent-bright);
+}
+
+.cj-hud-count-sep {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.cj-hud-track {
+  height: 0.4rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px var(--border);
+  margin-bottom: 0.6rem;
+}
+
+.cj-hud-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-bright), var(--gold));
+  transition: width 0.25s ease-out;
+}
+
+.cj-hud-track.is-done {
+  box-shadow: inset 0 0 0 1px var(--accent-bright);
+}
+
+.cj-hud-caption {
+  margin: 0;
+  font-size: 0.72em;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
